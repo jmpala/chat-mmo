@@ -1,0 +1,62 @@
+buildscript {
+    
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        google()
+    }
+    dependencies {
+        // lib for artemis-odb weaving.
+        // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
+        classpath "net.onedaybeard.artemis:artemis-odb-gradle-plugin:2.2.0"
+        // lib for artemis-odb fluid.
+        classpath "net.onedaybeard.artemis:artemis-fluid-gradle-plugin:2.2.0"
+    }
+}
+
+allprojects {
+    apply plugin: "eclipse"
+
+    version = '1.0'
+    ext {
+        appName = "chat-mmo"
+        artemisVersion = "2.2.0"
+        artemisContribVersion = "2.4.0"
+        gdxVersion = '1.10.0'
+        roboVMVersion = '2.3.12'
+        box2DLightsVersion = '1.5'
+        ashleyVersion = '1.7.3'
+        aiVersion = '1.8.2'
+        gdxControllersVersion = '2.1.0'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":client") {
+    apply plugin: "java"
+
+
+    dependencies {
+
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+        compile "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
+        compile "net.mostlyoriginal.artemis-odb:contrib-core:$artemisContribVersion"
+        compileOnly "net.onedaybeard.artemis:artemis-fluid-core:$artemisVersion"
+
+    }
+}
